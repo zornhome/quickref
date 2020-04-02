@@ -1,0 +1,13 @@
+Ctrl + a 移動行首
+Ctrl + e 移動到行尾
+
+ctrl + b 往前移動游標
+ctrl + h 往前刪除<-
+
+ctrl + F 往後移動游標
+ctrl + d 往後刪除 ->
+
+Ctrl + Left/Right arrow  (在字(word)間移動)
+
+ctrl+k 從游標處刪除到最後
+

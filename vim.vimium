@@ -1,0 +1,42 @@
+
+pen new tab with current url address (yank tab
+
+t : create new tab
+T : open tab searcher
+o : open history searcher
+
+(Browser native TAB travasal: Alt + 1,2,3,4 )
+yy: copy the current URL to the clipboard
+p(lowercase) : open clipboarded url(yy) at current tab browser
+P(uppercase) : open clipboarded url(yy) on the new tab browser
+yy + P : same as yt
+
+
+K: (shift k) shift to left tab
+J: (shift j) shift to right tab
+x: (lowercase) close current tab (ctrl + w chrome native)
+X: (uppercase) recover x (remove tab)
+alt + p : pin/unpin tab
+
+gu : go to url last segment and browsing
+gU : go to url root domain and browsing
+
+gi : focus on first input on page
+2gi: focus on second input on page
+r: reload
+
+
+
+i: Enter insert mode
+v: Enter virsual mode
+
+yf: copy a link URL to the clipnoard (select which link you want to clip) and then "t" open new tab , then paste clip to address
+
+/search : search page 
+ctrl + [ : goto vimium mode
+v: enter virsual mode
+
+/search + ctrl [ + v :  search page at specific word and then go to vimium mode then goto virtual mode , select word
+
+?: help
+

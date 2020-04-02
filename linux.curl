@@ -1,0 +1,20 @@
+curl localhost:9000/api .  #GET method only body response
+
+curl localhost:9000/api -v #GET method with header body response
+
+
+curl localhost:9000/api -X POST -d '{"name":"ss"}' -H "content-type: application/json"
+
+curl localhost:9000/api -X PUT -d @datafile.json -H "content-type: application/json"
+
+#只回傳 Header
+curl -I localhost
+
+#讀到 302
+curl -I localhost:9000 -X GET
+
+#discard response body
+curl -s localhost:9000/api -o /dev/null    
+
+#基本驗證
+curl localhost:9000/admin -H "Authorization: Basic ${echo -n admin:password | base64}"

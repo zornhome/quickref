@@ -1,0 +1,47 @@
+
+://ngrok.com/download 下載 ngrok client, 解壓到 /usr/local/bin
+   $ ./ngrok help
+
+1. 到 ngrok官網註冊 ,用google 帳號註冊
+
+2. 到ngrok官網 Dashboard-auth 取得 token 
+    
+    https://dashboard.ngrok.com/auth
+
+3. 在本機使用token註冊 
+   $ ngrok authtoken 1UXfLU93Gh6V6IbmlTY2W9Hxlx2_6ckSVeaUngXwMg7Qjoefe
+ 
+4. 開啟本機web執行於 8080,並告訴ngrok開放這個port 
+
+   $ ./ngrok http 8080 
+
+5. 上面指令執行後,會回復你當前對應到的網址 
+
+6. ngrok mapping 起來後,也會在 localhost:4040開啟監看,在網址輸入http://127.0.0.1:4040
+
+
+
+
+https://ngrok.com/docs
+
+
+*  開啟 ngrok tcp port , 讓外部也可連入本機sql server  
+
+   $./ngrok tcp 1443
+   $./ngrok http 80
+
+* 連入虛擬demo網址要求輸入驗證 
+
+   $nogok http --auth=account:password 8080 
+    account:帳號
+    password:密碼
+
+* 將ngrok 映射某個 domain , 例如local有2各站domain name分別不同 (dev.com, qat.com)
+  我只要某個domain 使用ngrok 
+
+   $ngrok http --host-header=dev.com 80 
+
+   假如要讓 ngrok port到 nginx 某個site 
+
+   $ngrok http --host-header=localhost 8080
+Unix/Mac Console

@@ -1,0 +1,116 @@
+caddy help :
+ #list all option
+ $caddy
+
+ # help run
+ $caddy help run 
+
+ #caddy adapt option help
+ $caddy help adapt 
+
+ #run caddy with caddyfile as forground process 
+ $caddy run
+
+ #run with specific config
+ $caddy run --config ../setting/caddyfile
+
+ #run wiht last setting
+ $caddy run --resume
+
+  #check config by curl localhost:2019
+  $curl http://localhost:2019/config/ | jq
+
+
+ #dump caddyfile in console with json format
+ $caddy adapt --config /path/caddyfile
+
+ #trans caddyfile to json file
+ $caddy adapt --config /path/caddyfile > caddyfile.json
+
+
+
+
+
+
+
+
+####################################################
+# Run Caddy as Linux service
+
+  注意事項:
+   1)確認啟動 caddy的權限 （建立一個專屬user,與group為 caddy 專用)
+   2) 使用官方的 caddy.service 檔
+      注意 caddy.service中 caddy binary的目錄是否正確 (包含啟動服務時,與reload服務時)
+      注意 Caddyfile 是否複製到指定的地方,因為systemd啟動時會去讀取Caddyfile
+   3) 常用指令參考
+   
+       #除了 systemctl status, 其它都加上sudo
+      $ systemctl status caddy
+      $ sudo systemctl start caddy 
+      $ sudo systemctl reload caddy 
+      $ sudo systemctl stop caddy
+
+      檢查caddy吐出的systemd log
+      $sudo journalctl -u caddy
+
+
+
+
+
+step1 
+ 將 Caddy binary 複製到 /usr/bin 
+   $sudo cp caddy /usr/bin/
+
+step2 測試是否正常動作
+
+   $caddy version
+
+step3 建立一個叫 caddy 的系統群組 "caddy"
+
+   $groupadd --system caddy 
+
+step4 建立caddy 專屬使用者,命名為 caddy, 必給予建立/寫入 home的權限 
+
+   $useradd --system \
+    --gid caddy \
+    --create-home \
+    --home-dir /var/lib/caddy \
+    --shell /usr/sbin/nologin \
+    --comment "Caddy web server" \
+    caddy
+
+step5 準備 caddy.service
+  再一次確認這兩個欄位的值是不是正確
+  ExecStart=/usr/bin/caddy run --config /etc/caddy/Caddyfile --adapter caddyfile --resume --environ
+  ExecReload=/usr/bin/caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
+
+   確認系統上有 caddy binary 與 systemd 這兩個東西
+
+
+step6 將你的 Caddyfile 複製到 /etc/caddy/Caddyfile (參閱: caddy.sercice上 ExecStart,ExecReload section)
+
+
+step7 第一次使用 systemd 啟動 必須執行下面
+
+   $ sudo systemctl daemon-reload
+   $ sudo systemctl enable caddy 
+   $ sudo systemctl start caddy 
+
+   上面指令執行後.確認一下, caddy啟動否
+    $  systemctl status caddy
+
+
+  ©©©©  使用systemed官方的service 預設會將 Caddy 輸出導向 journalctl ©©©© 
+     journalctl 可用於檢索 systemd 日誌, 如果不帶任何參數直接調用此命令， 
+     那麼將顯示所有日誌內容(從最早一條日誌記錄開始)。
+
+    $sudo journalctl -u caddy
+
+
+
+ 啟動服務與重新整理 
+
+  $sudo systemctl reload caddy 
+
+  $sudo systemctl stop caddy
+ 

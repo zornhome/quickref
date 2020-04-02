@@ -1,0 +1,66 @@
+#列出 tag
+ git tag -l
+
+#列出特定tag
+ git tag -l "v0.0.0"
+
+#新增帶有註述的tag
+ git tag -a v0.0.0 -m "version 0.0.0"
+
+#顯示當前repo
+git show
+
+#針對過往commit進行標籤
+ #先將過往紀錄列出
+ git log --pretty=oneline
+ #選擇所要標籤的commit進行標籤
+ git tag -a v0.0.0 7c5f24d
+
+
+#上傳標籤到遠端
+ #上傳本地標籤(多個標籤)
+ git push origin --tags
+ #上傳指定標籤
+ git push origin v0.0.0
+
+#刪除遠端特定標籤
+git push origin :refs/tags/v0.0.0
+
+#刪除本地tag
+git tag -d v0.0.0
+
+###############################################
+# 建立分支並移到分支上
+ git checkout -b mybranch
+
+# 同時查看本地與遠端分支名稱
+ git branch -a
+
+
+###############################################
+
+▲  git branch   //查看有哪些分支
+▲  git checkout BRANCH_NAME      //移到分支
+▲  git checkout -b BRANCH_NAME   //建立新的分支,並移到分支
+▲  git checkout -b local_branch_name origin/remote_branch 
+▲  git branch -d BRANCH_NAME //合併完成後,刪除不須用到的分支,可以再透過  git branch 檢查看看
+
+# 建立分支並移到分支上
+ git checkout -b mybranch
+
+# 同時查看本地與遠端分支名稱
+ git branch -a
+ 
+ 
+ 
+ 
+ ###### 還原所有(尚未staging)的修改 ##########
+ git checkout .
+ git checkout filename
+ 
+ #####將所有stageing的檔案取回來.變成 unstaging狀態####
+ git reset HEAD 
+ 
+ ### Unstaging個別檔案####
+ git reset HEAD filename
+

@@ -1,0 +1,12 @@
+schema:
+  - schemas/*.schema
+exec:
+  filename: generated.go
+  package: poc
+model:
+  filename: generated_model.go
+  package: poc
+resolver:
+  filename: generated_resolver.go
+  type: Resolver
+  package: poc

@@ -1,0 +1,60 @@
+$ssh-keygen -t rsa -b 4096 -C "yourmail@com" -f "rsa for company"
+
+$eval $(ssh-agent -s)
+
+################
+~/.ssh/config
+
+Host ec2-instancexxx
+	Hostname ec2-13-58-114-248.us-wast-2.compute.amazonaws.com
+	User ec2-user
+	IdentityFile ~/.ssh/aws-cicd.pem
+	
+Host github.com
+     	HostName myGitHub
+     	User john
+     	IdentityFile ~/.ssh/john/id_rsa
+
+Host gitlab.com
+	HostName myGitLab
+	User done
+	IdentityFile ~/.ssh/done/id_rsa 
+----------------------------------------------- 
+###################
+Mac: 
+Host *
+	AddkeysToAgent yes
+	UseKeychain yes
+	IdentityFile ~/.ssh/id_rsa
+
+#Mac: MacOS Sierra 10.12.1 後的版本
+# add your ssh private key to ssh-agent and store your passphase in the keychain
+$ssh-add -K ~/.ssh/id_rsa
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#list all your ssh keys attached to the ssh-agent
+$ssh-add -l
+
+#removes all ssh entries from ssh-agent
+$ssh-add -D
+
+#add the relevent ssh key
+$ssh-add ~/.ssh/john/id_rsa
+
