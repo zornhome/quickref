@@ -1,0 +1,181 @@
+#open a UML class diagram
+ ctrl alt shift U
+
+#open a UML class diagram in a popup window
+ ctrl alit U
+
+#help analyze changes using diagrams
+ ctrl alt shift D
+ ctrl     shift D
+
+
+#Find Action
+ctrl shift A
+
+#Find anywhere (find Type , Files , Symbols, Actions ) Ex: Recent Location
+shift shift 
+
+#open switcher
+ctrl TAB
+
+#Open Setting
+ctrl alt s
+
+
+#關閉/開啟側邊project欄
+alt 1
+
+#顯示最近開啟或修改過的檔案
+ctrl e
+
+
+#顯示最近開啟或修改過的位置
+ctrl shift e
+
+#(Show Intention Actions)編輯代碼時,開啟提示,或代碼補全,視當時情況Intellij會智能的處裡
+alt enter
+
+#編輯代碼時,整行的複製
+ctrl d
+
+#編輯代碼時,整行刪除
+ctrl y
+
+#Column Selection Mode 切換 (先 shift alt Insert 進行模式切換) , 再來就可以使用 shift Up/Down 進行行選取
+
+# 在Ducky one 2 mini , 就是 shift + Fn + Up/Down
+ shift alt Insert
+
+
+#編輯代碼時, 情境區塊擴展選取(例如: 在一個 struct的屬性游標停駐在一個struct屬性,一直按ctrl w ,會區塊屬性,再來就是區塊struct,最後區塊方法..
+ctrl w
+
+#編輯代碼時,叫出可能的參數,例如: http.HandleFunc("/",  時, Intellij 會知道接下來的第二個參數會是麼,你可以按 Ctrl shifti space
+ctrl shift space
+
+
+#移除沒用到的 package
+Ctrl alt L
+
+
+#go to definition
+ctrl b
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# play ground plate
+ctrl q (顯示code snippet)
+
+
+#Refactor this (重構成 method, variable , const , 或移出到另一個檔案)
+ctrl shift alt t 
+shift + shift -> refactor this
+
+#Refactor hits -> change Signature (refactor extract method後,對回傳的參數再進行修正 (signature ))
+例如要拿掉error,將游標移到變數上,如下面的 error, 按下ctrl f6 或使用ctrl shift alt t 選取change signature
+func refactorFun() ( error, string) 
+ 
+
+#(Next Highlighted Error)編輯代碼時,跳到下一個錯誤
+F2
+
+#Live Template (輸入關鍵字後,當你自動產生已先定義的代碼)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
