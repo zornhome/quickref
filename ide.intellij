@@ -1,4 +1,5 @@
 #open a UML class diagram
+
  ctrl alt shift U
 
 #open a UML class diagram in a popup window
@@ -9,71 +10,110 @@
  ctrl     shift D
 
 
-#Find Action
+#Find Action (29:20)
 ctrl shift A
 
-#Find anywhere (find Type , Files , Symbols, Actions ) Ex: Recent Location
+#Find anywhere (find Type , Files , Symbols, Actions ) Ex: Recent Location (30:00)
 shift shift 
 
-#open switcher
+#open switcher (8:10)
 ctrl TAB
 
-#Open Setting
+#Open Setting (42:48)
 ctrl alt s
 
 
-#關閉/開啟側邊project欄
+#關閉/開啟側邊project欄 (13:00)
 alt 1
+#terminal siwtch
+alt F12
 
-#顯示最近開啟或修改過的檔案
+#顯示最近開啟或修改過的檔案 (28:30)
 ctrl e
 
 
 #顯示最近開啟或修改過的位置
+#(28:50)
 ctrl shift e
 
-#(Show Intention Actions)編輯代碼時,開啟提示,或代碼補全,視當時情況Intellij會智能的處裡
+#(Show Intention Actions, Quick-fixes)編輯代碼時,開啟提示,或代碼補全,視當時情況Intellij會智能的處裡 (16:00)
+# 可以用來建立草稿時期的struct, 建立field
 alt enter
 
-#編輯代碼時,整行的複製
+#編輯代碼時,整行的複製 (33:50)
 ctrl d
 
-#編輯代碼時,整行刪除
+#編輯代碼時,整行刪除 (34:18)
 ctrl y
 
 #Column Selection Mode 切換 (先 shift alt Insert 進行模式切換) , 再來就可以使用 shift Up/Down 進行行選取
-
 # 在Ducky one 2 mini , 就是 shift + Fn + Up/Down
+# Column Selection mode (44:00)
  shift alt Insert
 
 
 #編輯代碼時, 情境區塊擴展選取(例如: 在一個 struct的屬性游標停駐在一個struct屬性,一直按ctrl w ,會區塊屬性,再來就是區塊struct,最後區塊方法..
-ctrl w
+# (39:10, 46:38)
+ctrl w        (Extend selection)
+ctrl shift w  (Shrink selection)
+
+
+#Postfix ( 17:10)
+ioutil.ReadFile("..").var<TAB>
+err.nn<TAB>
 
 #編輯代碼時,叫出可能的參數,例如: http.HandleFunc("/",  時, Intellij 會知道接下來的第二個參數會是麼,你可以按 Ctrl shifti space
+# Smart Completion (51:47)
 ctrl shift space
 
 
-#移除沒用到的 package
-Ctrl alt L
+#Reformat (55:00)
+ctrl alt L
+ctrl alt shift L
 
 
-#go to definition
+#go to definition, jump to definition & go back to original (1:01:48)
 ctrl b
 
+#Quick document lookup  ( 8:50 ~ 9:49)
+ctrl q
+
+
+#Refactor ( 37:38, 39:10)
+ctrl alt shift t
+shift x 2 then enter "refactor this"
+重構錯誤的使用 39:40, 要使用 Change signature
+
+#將code block 重構成 method
+先選取一段code block
+  ctrl alt shift t -> ctrl alt m
+  ctrl alt shift t -> key in "Method"
+
+#Refactor 區塊程式到另一個檔案 (57:54 )
 
 
 
 
+#go to next error
+F2
+
+#close current editor tab (Setting > keymap > windows >Editor tabs > "Close TAB" )
+ctrl F4
+
+#找尋struct
+ctrl N
+
+#Live Template (42:10 ~ )
+
+#移動選取 ctrl + sfhit 左/右
+ctrl shift <-, ->
+
+#移動整行往上,往下  ctrl _ shift 上/下
+ctrl shift 上,下
 
 
-
-
-
-
-
-
-
+#當任何對話框時,按下 alt,所有可用的選項都會在關鍵字母下出現底線,這個時候可以鍵入該字母,就可以對該選項進行 enable / disable
+ex.在 Find Action (ctrl shift a)視窗中,按下alt , 你可以看到 Include disable Action 會在 dis的d出現底線,這時你可以按下 d 鍵進行該功能的開關
 
 
 
@@ -151,8 +191,11 @@ func refactorFun() ( error, string)
 #(Next Highlighted Error)編輯代碼時,跳到下一個錯誤
 F2
 
-#Live Template (輸入關鍵字後,當你自動產生已先定義的代碼)
+# find struct/class
+ctrl + n
 
+#Close Tab
+ctrl F4
 
 
 
