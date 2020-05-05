@@ -1,0 +1,230 @@
+* get the protobuf tools and gRPC Golang libraries
+
+  1) get protobuf compile ( protoc )
+
+	download protoc compiler from GitHub release 	https://github.com/protocolbuffers/protobuf/releases/download/v3.11.4/protoc-3.11.4-linux-x86_64.zip
+
+     $PB_REL="https://github.com/protocolbuffers/protobuf/releases"
+     $ curl -LO $PB_REL/download/v3.11.4/protoc-3.11.4-linux-x86_64.zip
+     $ unzip protoc-3.11.4-linux-x86_64.zip -d $HOME/.local
+
+
+
+  2) grpc golang libarary
+
+	下載gRPC並告訴 go這是一個 go module. Enable module-aeare mode 
+	$export GO111MODULE=on 
+
+	#指定安裝版本
+	$go get google.golang.org/grpc@v1.28.1
+
+	#取得最新版
+	$go get google.golang.org/grpc
+
+	安裝grpc golang libarary已經自帶 protoc-gen-go, 你可以在 $(go env GOPATH)/pkg/mod/github.com/golang/ 下找到
+
+
+ 3) 自安裝  protoc go gen (protoc-gen-go)
+ 
+        $go get github.com/golang/protobuf/protoc-gen-go
+
+	#或下載最新版
+	$go get github.com/golang/protobuf/protoc-gen-go@v1.4.0
+
+	下載後可以自行編譯 protoc-gen-go, 記得 GO111MODULE=on
+
+
+完成上述步驟必須設定PATH,必較方便建置編譯 proto file
+
+	# 設定 protoc compiler 和 protoc-gen-go binary路徑
+	$ export PATH="$PATH:$(go env GOPATH)/bin"
+	$ export PATH="$PATH:$HOME/.local/bin"
+
+
+你可以在 $(go env GOPATH)/pkg/mod/google.golang.org/grpc/@vx.xx.x/examples 下找到範例進行測試
+
+
+
+
+========================================================================================================================================
+
+== gRPC Server ==
+
+#建置一隻 proto檔案,檔名是main.proto
+//go:generate protoc -I ../protos --go_out=plugins=grpc:../protos ../protos/main.proto
+
+#透過 go:generate 一次建置所有的 .proto 檔案
+//go:generate sh -c "protoc -I ../protos --go_out=plugins=grpc:../api ../prtots/*.proto"
+
+import (
+	"net"
+	"context"
+	"os"
+
+	"google.golang.org/grpc"
+
+	//為了要使用 evans 的 reflection
+	"google.golang.org/grpc/reflection"
+
+	//為了使用 grpc自帶的log"
+	"google.golang.org/grpc/grpclog"
+
+	//your pb package goes here
+)
+
+var (
+ log = grpclog.NewLoggerV2(os.Stdout, os.Stdout, os.Stdout)
+)
+
+func main() {
+
+	l,err := net.Listen("tcp", ":50051")
+	if err != nil { panic(err)}
+
+	var opts []grpc.ServerOption
+	grpcServer := grpc.NewServer()
+
+	reflection.Register(grpcServer)  //for evans
+
+	pb.NewProjectServer( grpcServer , newServer())  //newServer()回傳grpc Service 實作
+
+	grpcServer.Serve(l)
+}
+
+		func (s *server) UnaryService(ctx context.Context , r *pb.Request ) ( *pb.Response, error){}
+
+		// Hint
+		// err := stream.Send(*pb.Response) 
+		func (s *Server) GetList(r *pb.Request, stream pb.<service>_GetListServer) (error) {}
+
+		// Hint
+		// request,err := stream.Recv()   
+		// if err == io.EOF { stream.SendAndClose(*pb.Response)  
+		func (s *Server) SetList(stream pb.<service>_SetListServer) (error) {}
+
+		//Hint
+		// err := stream.Send(*pb.Response)
+		// request,err := stream.Recv() 
+		//   if err == io.EOF 
+		//   if err != nil { return err }
+		func (s *Server) Duplex( stream pb.<service>_DuplexServer) (error) {}
+
+== gRPC Client ==
+import (
+ "context"
+ "io"
+ "os"
+
+ //使用測試golden file .pem
+ "google.golang.org/grpc/testdata"
+ //使用TLS
+ "google.golang.org/grpc/credentials"
+
+ "google.golang.org/grpc"
+ "google.golang.org/grpc/grpclog"
+
+ "pb" //your protoc gen package
+)
+
+var (
+ log = grpclog.NewLoggerV2(os.Stdout, os.Stdout, os.Stdout)
+)
+
+func main() {
+	
+	var opts []grpc.DialOption
+	
+	opts := append(opts, grpc.WithInsecure())
+	opts := append(opts, grpc.WithBlock()) 
+
+	conn,err := grpc.Dial(":50051", opts...)
+	if err != nil { panic(err)}
+	defer conn.Close()
+ 	
+	client := pb.NewXxxxClient(conn)
+	//start to use client below ...
+}
+
+func main(){
+	
+ 	caFile := testdata.Path("ca.pem")
+	creds,err := credentials.NewClientTLSFromFile(caFile, ":50051")	
+
+	conn,err := grpc.Dial(":50051", grpc.WithTransportCredentials(creds) , grpc.WithBlock())
+	if err != nil {
+		log.Error(err)
+	}
+	defer conn.Close()
+	
+	client := pb.NewXxxxxClient(conn)
+	// start use client below
+}
+
+func GetResponse(client pb.<Service>Client) {
+	ctx,cancel := context.WithCancel(ctx.Background(), time.Second )
+	defec cancel()
+	response, err := client.GetResponse(ctx, *pb.Request)
+}
+
+func GetResponse(client pb.<service>Client) {
+	ctx, cancel := context....
+	defer cancel()
+	
+	stream,err := client.GetResponse(ctx, *pb.Request)
+	for {	
+		response, err := stream.Recv()
+		if err == io.EOF {
+			//read done
+		}
+		if err != nil { panic(err) }
+	}
+}
+	
+func SetResponse(client pb.<service>Client) {
+	ctx,cancel := context. ...
+	stream, err := client.SetResponse(ctx)
+	if err != nil { panic(err)}
+
+	for _,data := range datalist {
+		err := stream.Send(*pb.Request{ data })
+	}
+	reply,err := stream.CloseAndRecv()
+}
+
+func Duplex(client pb.<service>Client) {
+	ctx,cancel := context ....
+	defer cancel()
+
+	stream,err := client.Duplex(ctx)
+
+	go func() {
+		response, err := stream.Recv()
+		if err == io.EOF {
+			
+		}
+	}()
+	go func() {
+		for _,data := range datalist {
+			if err := stream.Send(*pb.Request { data }); err != nil {
+				// handle error
+			}
+		}
+		stream.CloseSend()
+
+	}()
+	//TODO: 必須再處理
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
