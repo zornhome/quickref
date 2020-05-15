@@ -27,6 +27,65 @@ caddy help :
  #trans caddyfile to json file
  $caddy adapt --config /path/caddyfile > caddyfile.json
 
+ #trans caddyfile to json file with well format
+ $caddy adapt --config /path/caddyfile | jq '.' > caddy.json
+
+
+
+
+
+
+ 
+
+使用 caddy help 方式
+1. 先 caddy (叫出可用主選項help文件)
+2. 針對主選項進行 help可看到子選項
+ex: 叫出 file-server子選項 , reverse-proxy 子選項
+   caddy help file-server
+   caddy help reverse-proxy
+
+
+    #查詢正在執行中caddy 的組態 ,  注意: /config/ 小寫的c
+    # Port 2019 是 Caddy Admin port ,
+    # Port 2015 是Caddy 預設啟動 port , 假如沒指定port時
+    $curl localhost:2019/config/
+
+    #以當前目錄下的caddy.jso (組態json)設定正在執行中的 caddy
+    $curl localhost:2019/load -X POST -H "Content-Type: application/json" -d @caddy.json
+
+
+
+
+./caddy #help file
+ ./caddy help adapt  # caddy adapt help
+./caddy start  //default listen on 2019
+./caddy stop
+./caddy reload
+./caddy run --config path/caddyfile
+./caddy adapt | jq
+./caddy adapt --config /path/Caddyfile | jq    #show in json file
+./caddy adapt Caddyfile | jq '.' > caddy.json  #caddyfile porting to json file
+
+
+curl localhost:2019/load \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d @caddy.json
+
+透過Caddy API 去設定Caddy 組態,這些設定都會被記下(~/.config/caddy/autosave.json),以便下次可以使用 ./caddy run --resume 啟動.
+./caddy run --resume
+
+
+
+
+./caddy file-server   //default port: 2015
+./caddy file-server -browse
+./caddy file-server --listen :80
+./caddy file-server --browse --listen :80
+./caddy reverse-proxy --to :9000   // 2015->9000
+./caddy reverse-proxy --from :80 --to 127.0.0.1:9000
+./caddy reverse-proxy --from example.com --to localhost:9000
+
 
 
 
@@ -114,3 +173,47 @@ step7 第一次使用 systemd 啟動 必須執行下面
 
   $sudo systemctl stop caddy
  
+
+
+
+
+
+Caddy Config
+Caddy 組態檔案,ssl certificate 都會放到 /etc/caddy 目錄
+
+啟動Caddy , 當前config會被寫到  ~/.config/caddy/autosave.json
+# 載入上次啟動時的設定 Caddyfile (上次啟動的設定會被自動存在 ~/.config/caddy/autosave.json)
+$caddy run --resume
+
+
+    #查詢正在執行中caddy 的組態 ,  注意: /config/ 小寫的c
+    # Port 2019 是 Caddy Admin port ,
+    # Port 2015 是Caddy 預設啟動 port , 假如沒指定port時
+    $curl localhost:2019/config/
+
+
+
+
+
+3)) Caddy 重要的文件放在 Data directory
+
+  對於除了 Caddyfile 命名的組態檔外, 其他命名的組態檔你想放哪都可以,
+
+
+  Caddy 會將 TLS 憑證和其他重要的文件放在一種資料目錄,
+  假如你有設定 XDG_DATA_HOME這個環境變數,這就會是 $XDG_DATA_HOME/caddy
+
+  若沒有設定XDG_DATA_HOME, 就會依平台不同而有所不同
+   Linux, BSD平台會位於   $HOME/.local/share/caddy
+   macOS平台會位於        $HOME/Library/Application Support/Caddy
+   Windows平台會位於      %AppData%\Caddy
+
+4) Caddy 組態目錄
+
+為了能方便使用上一次啟動Caddy 時的組態, 或者是caddy reolad失敗時會自動以上次的組態啟動 ,或是執行 caddy --resume (以上次組態執行Caddy啟動)
+Caddy 會將上次順利啟動的Caddy的組態存放在 $XDG_CONFIG_HOME/caddy 目錄,假如你用設定 $XDG_CONFIG_HOME環境變數的話
+否則依照平台的不同有所差異
+
+   Linux, BSD平台會位於   $HOME/.config/caddy
+   macOS平台會位於        $HOME/Library/Application Support/Caddy
+   Windows平台會位於      %AppData%\Caddy
