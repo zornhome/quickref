@@ -1,0 +1,12 @@
+
+File >> preference >> Keyboard Shortcuts
+
+
+
+			   Command						Keybinding              When
+Editor 與 terminal 切換
+		workbench.action.terminal.focus				      Shift + `			!terminalFocus
+		workbench.action.focusActiveEditorGroup			      Shift + `			terminalFocus
+
+開一新的terminal
+		woekbench.action.terminal.new				 Ctrl + Shift + `                
