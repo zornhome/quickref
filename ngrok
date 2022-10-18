@@ -9,7 +9,18 @@
     https://dashboard.ngrok.com/auth
 
 3. 在本機使用token註冊 
-   $ ngrok authtoken 1UXfLU93Gh6V6IbmlTY2W9Hxlx2_6ckSVeaUngXwMg7Qjoefe
+   $ ngrok config add-authtoken 2DkHSl9sBgWypgysSHEMsH5C5cf_467vsn1CfY9DwztURPsnV
+   
+   將會存到 file: /Users/zorn/Library/Application Support/ngrok/ngrok.yml
+   
+   
+   你也可以手動加入 ngrok.yml
+   $ngrok config edit
+   
+   # in /Users/zorn/Library/Application Support/ngrok/ngrok.yml
+    authtoken: 2DkHSl9sBgWypgysSHEMsH5C5cf_467vsn1CfY9DwztURPsnV
+   
+   
  
 4. 開啟本機web執行於 8080,並告訴ngrok開放這個port 
 
